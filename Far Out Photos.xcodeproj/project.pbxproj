@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		9F227A87215AC81000C83B03 /* NASAPhotos.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F227A86215AC81000C83B03 /* NASAPhotos.plist */; };
 		9FDC071C215AD1C100330A8D /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDC071B215AD1C100330A8D /* PhotoCell.swift */; };
 		9FDC0720215BFD7100330A8D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDC071F215BFD7100330A8D /* PhotoViewController.swift */; };
+		EE543C6725DC74FE00985B76 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = EE543C6625DC74FE00985B76 /* Nuke */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE543C6725DC74FE00985B76 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +94,9 @@
 			dependencies = (
 			);
 			name = "Far Out Photos";
+			packageProductDependencies = (
+				EE543C6625DC74FE00985B76 /* Nuke */,
+			);
 			productName = "Far Out Photos";
 			productReference = 9F227A71215AC7DD00C83B03 /* Far Out Photos.app */;
 			productType = "com.apple.product-type.application";
@@ -121,6 +126,9 @@
 				Base,
 			);
 			mainGroup = 9F227A68215AC7DD00C83B03;
+			packageReferences = (
+				EE543C6525DC74FE00985B76 /* XCRemoteSwiftPackageReference "Nuke" */,
+			);
 			productRefGroup = 9F227A72215AC7DD00C83B03 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -374,6 +382,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EE543C6525DC74FE00985B76 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EE543C6625DC74FE00985B76 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE543C6525DC74FE00985B76 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9F227A69215AC7DD00C83B03 /* Project object */;
 }
