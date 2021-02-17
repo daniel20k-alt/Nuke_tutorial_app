@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import UIKit
+import Nuke
 
 class PhotoGalleryViewController: UICollectionViewController {
   var photoURLs: [URL] = []
@@ -67,8 +68,7 @@ extension PhotoGalleryViewController {
   }
 
   override func collectionView(
-    _ collectionView: UICollectionView,
-    cellForItemAt indexPath: IndexPath
+    _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: "PhotoCell",
@@ -76,12 +76,8 @@ extension PhotoGalleryViewController {
         return UICollectionViewCell()
     }
 
-    if let imageData = try? Data(contentsOf: photoURLs[indexPath.row]),
-      let image = UIImage(data: imageData) {
-        cell.imageView.image = image
-    } else {
-      cell.imageView.image = nil
-    }
+    let url = photoURLs[indexPath.row] //grabbing URL from photo based on cell's index path
+    Nuke.loadImage(with: url, into: cell.imageView) //use Nuke to load img from url directly to cell
 
     return cell
   }
