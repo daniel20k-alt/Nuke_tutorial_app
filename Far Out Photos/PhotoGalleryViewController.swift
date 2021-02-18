@@ -77,7 +77,10 @@ extension PhotoGalleryViewController {
     }
 
     let url = photoURLs[indexPath.row] //grabbing URL from photo based on cell's index path
-    Nuke.loadImage(with: url, into: cell.imageView) //use Nuke to load img from url directly to cell
+    
+    let options = ImageLoadingOptions(placeholder: UIImage(named: "dark-moon"), transition: .fadeIn(duration: 0.5))
+    
+    Nuke.loadImage(with: url, options: options, into: cell.imageView) //use Nuke to load img from url directly to cell
 
     return cell
   }
