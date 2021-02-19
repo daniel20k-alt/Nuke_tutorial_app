@@ -35,6 +35,16 @@ import Nuke
 
 class PhotoGalleryViewController: UICollectionViewController {
   var photoURLs: [URL] = []
+  
+  var pixelSize: CGFloat {
+    return cellSize * UIScreen.main.scale
+  }
+
+
+  var resizedImageProcessors: [ImageProcessing] {
+    let imageSize = CGSize(width: pixelSize, height: pixelSize)
+    return [ImageProcessors.Resize(size: imageSize, contentMode: .aspectFill)]
+  }
 
   let cellSpacing: CGFloat = 1
   let columns: CGFloat = 3
@@ -80,7 +90,11 @@ extension PhotoGalleryViewController {
     
     let options = ImageLoadingOptions(placeholder: UIImage(named: "dark-moon"), transition: .fadeIn(duration: 0.5))
     
-    Nuke.loadImage(with: url, options: options, into: cell.imageView) //use Nuke to load img from url directly to cell
+    let request = ImageRequest(
+      url: url,
+      processors: resizedImageProcessors)
+
+    Nuke.loadImage(with: request, options: options, into: cell.imageView)
 
     return cell
   }
