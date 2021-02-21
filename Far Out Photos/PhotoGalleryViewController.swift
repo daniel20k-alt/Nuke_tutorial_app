@@ -40,7 +40,6 @@ class PhotoGalleryViewController: UICollectionViewController {
     return cellSize * UIScreen.main.scale
   }
 
-
   var resizedImageProcessors: [ImageProcessing] {
     let imageSize = CGSize(width: pixelSize, height: pixelSize)
     return [ImageProcessors.Resize(size: imageSize, contentMode: .aspectFill)]
@@ -65,6 +64,20 @@ class PhotoGalleryViewController: UICollectionViewController {
     }
 
     photoURLs = urlPaths.compactMap { URL(string: $0) }
+    
+    let contentModes = ImageLoadingOptions.ContentModes(
+      success: .scaleAspectFill,
+      failure: .scaleAspectFit,
+      placeholder: .scaleAspectFit)
+
+    ImageLoadingOptions.shared.contentModes = contentModes
+
+    ImageLoadingOptions.shared.placeholder = UIImage(named: "dark-moon")
+
+    ImageLoadingOptions.shared.failureImage = UIImage(named: "annoyed")
+
+    ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.5)
+    
   }
 }
 
@@ -88,13 +101,11 @@ extension PhotoGalleryViewController {
 
     let url = photoURLs[indexPath.row] //grabbing URL from photo based on cell's index path
     
-    let options = ImageLoadingOptions(placeholder: UIImage(named: "dark-moon"), transition: .fadeIn(duration: 0.5))
-    
     let request = ImageRequest(
       url: url,
       processors: resizedImageProcessors)
 
-    Nuke.loadImage(with: request, options: options, into: cell.imageView)
+    Nuke.loadImage(with: request, into: cell.imageView)
 
     return cell
   }
