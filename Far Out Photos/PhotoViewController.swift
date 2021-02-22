@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import UIKit
+import Nuke
 
 class PhotoViewController: UIViewController {
   var imageURL: URL?
@@ -44,9 +45,26 @@ class PhotoViewController: UIViewController {
       return
     }
 
-    if let imageData = try? Data(contentsOf: imageURL),
-      let image = UIImage(data: imageData) {
-      imageView.image = image
+    imageView.image = ImageLoadingOptions.shared.placeholder
+    imageView.contentMode = .scaleAspectFit
+
+    ImagePipeline.shared.loadImage(
+    
+      with: imageURL) { [weak self] response in // 4
+      guard let self = self else {
+        return
+      }
+    
+      switch response {
+    
+      case .failure:
+        self.imageView.image = ImageLoadingOptions.shared.failureImage
+        self.imageView.contentMode = .scaleAspectFit
+      
+      case let .success(imageResponse):
+        self.imageView.image = imageResponse.image
+        self.imageView.contentMode = .scaleAspectFill
+      }
     }
   }
 
