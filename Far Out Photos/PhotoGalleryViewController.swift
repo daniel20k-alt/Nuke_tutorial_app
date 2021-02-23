@@ -78,6 +78,16 @@ class PhotoGalleryViewController: UICollectionViewController {
 
     ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.5)
     
+    
+    DataLoader.sharedUrlCache.diskCapacity = 0 //disabling default disk cache
+        
+    let pipeline = ImagePipeline {
+      let dataCache = try? DataCache(name: "com.raywenderlich.Far-Out-Photos.datacache")
+      dataCache?.sizeLimit = 200 * 1024 * 1024
+      $0.dataCache = dataCache
+    }
+    ImagePipeline.shared = pipeline
+    
   }
 }
 
@@ -159,4 +169,8 @@ extension PhotoGalleryViewController {
 
     navigationController?.pushViewController(photoViewController, animated: true)
   }
+  
+  
+  
+  
 }
