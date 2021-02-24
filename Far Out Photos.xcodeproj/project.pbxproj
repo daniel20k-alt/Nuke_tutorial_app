@@ -16,6 +16,7 @@
 		9FDC071C215AD1C100330A8D /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDC071B215AD1C100330A8D /* PhotoCell.swift */; };
 		9FDC0720215BFD7100330A8D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDC071F215BFD7100330A8D /* PhotoViewController.swift */; };
 		EE543C6725DC74FE00985B76 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = EE543C6625DC74FE00985B76 /* Nuke */; };
+		EE543C6C25E6FA5900985B76 /* ImagePublisher in Frameworks */ = {isa = PBXBuildFile; productRef = EE543C6B25E6FA5900985B76 /* ImagePublisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE543C6725DC74FE00985B76 /* Nuke in Frameworks */,
+				EE543C6C25E6FA5900985B76 /* ImagePublisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +98,7 @@
 			name = "Far Out Photos";
 			packageProductDependencies = (
 				EE543C6625DC74FE00985B76 /* Nuke */,
+				EE543C6B25E6FA5900985B76 /* ImagePublisher */,
 			);
 			productName = "Far Out Photos";
 			productReference = 9F227A71215AC7DD00C83B03 /* Far Out Photos.app */;
@@ -128,6 +131,7 @@
 			mainGroup = 9F227A68215AC7DD00C83B03;
 			packageReferences = (
 				EE543C6525DC74FE00985B76 /* XCRemoteSwiftPackageReference "Nuke" */,
+				EE543C6A25E6FA5900985B76 /* XCRemoteSwiftPackageReference "ImagePublisher" */,
 			);
 			productRefGroup = 9F227A72215AC7DD00C83B03 /* Products */;
 			projectDirPath = "";
@@ -392,6 +396,14 @@
 				minimumVersion = 9.2.4;
 			};
 		};
+		EE543C6A25E6FA5900985B76 /* XCRemoteSwiftPackageReference "ImagePublisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/ImagePublisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -399,6 +411,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EE543C6525DC74FE00985B76 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
+		};
+		EE543C6B25E6FA5900985B76 /* ImagePublisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE543C6A25E6FA5900985B76 /* XCRemoteSwiftPackageReference "ImagePublisher" */;
+			productName = ImagePublisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
