@@ -32,10 +32,16 @@
 
 import UIKit
 import Nuke
+import Combine
+import ImagePublisher
 
 
 class PhotoViewController: UIViewController {
   var imageURL: URL?
+  
+  var cancellable: AnyCancellable?
+  
+  var resizedImageProcessors: [ImageProcessing] = []
 
   @IBOutlet weak var imageView: UIImageView!
 
@@ -49,25 +55,40 @@ class PhotoViewController: UIViewController {
     imageView.image = ImageLoadingOptions.shared.placeholder
     imageView.contentMode = .scaleAspectFit
 
-    ImagePipeline.shared.loadImage(
+    loadImage(url: imageURL)
     
-      with: imageURL) { [weak self] response in // 4
-      guard let self = self else {
-        return
-      }
-    
-      switch response {
-    
-      case .failure:
-        self.imageView.image = ImageLoadingOptions.shared.failureImage
-        self.imageView.contentMode = .scaleAspectFit
-      
-      case let .success(imageResponse):
-        self.imageView.image = imageResponse.image
-        self.imageView.contentMode = .scaleAspectFill
-      }
-    }
   }
+    
+    func loadImage(url: URL) {
+    
+      let resizedImageRequest = ImageRequest(
+        url: url,
+        processors: resizedImageProcessors)
+
+      let resizedImagePublisher = ImagePipeline.shared
+        .imagePublisher(with: resizedImageRequest)
+
+      cancellable = resizedImagePublisher
+        .sink(
+
+          receiveCompletion: { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .failure:
+              self.imageView.image = ImageLoadingOptions.shared.failureImage
+              self.imageView.contentMode = .scaleAspectFit
+            case .finished:
+              break
+            }
+          },
+      
+          receiveValue: {
+            self.imageView.image = $0.image
+            self.imageView.contentMode = .scaleAspectFill
+          }
+      )
+    }
+  
 
   static func instantiate() -> PhotoViewController? {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)

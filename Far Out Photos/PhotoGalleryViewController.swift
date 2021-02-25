@@ -160,17 +160,14 @@ extension PhotoGalleryViewController {
   override func collectionView(
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
-  ) {
-    guard let photoViewController = PhotoViewController.instantiate() else {
+  )  { guard let photoViewController = PhotoViewController.instantiate() else {
       return
     }
 
-    photoViewController.imageURL = photoURLs[indexPath.row]
-
+  photoViewController.resizedImageProcessors = resizedImageProcessors
+    
+  photoViewController.imageURL = photoURLs[indexPath.row]
+  
     navigationController?.pushViewController(photoViewController, animated: true)
   }
-  
-  
-  
-  
 }
