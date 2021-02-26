@@ -67,26 +67,26 @@ class PhotoViewController: UIViewController {
 
       let resizedImagePublisher = ImagePipeline.shared
         .imagePublisher(with: resizedImageRequest)
-
-      cancellable = resizedImagePublisher
-        .sink(
-
-          receiveCompletion: { [weak self] response in
-            guard let self = self else { return }
-            switch response {
-            case .failure:
-              self.imageView.image = ImageLoadingOptions.shared.failureImage
-              self.imageView.contentMode = .scaleAspectFit
-            case .finished:
-              break
-            }
-          },
       
-          receiveValue: {
-            self.imageView.image = $0.image
-            self.imageView.contentMode = .scaleAspectFill
-          }
-      )
+      //creating a publisher directly using the image URL
+      let originalImagePublisher = ImagePipeline.shared.imagePublisher(with: url)
+      
+      guard let failedImage = ImageLoadingOptions.shared.failureImage else {
+        return
+      }
+
+      cancellable = resizedImagePublisher.append(originalImagePublisher)
+        
+        .map {
+          ($0.image, UIView.ContentMode.scaleAspectFill)
+        }.catch { _ in
+          Just((failedImage, .scaleAspectFit))
+        }
+        
+        .sink {
+          self.imageView.image = $0
+          self.imageView.contentMode = $1
+        }
     }
   
 

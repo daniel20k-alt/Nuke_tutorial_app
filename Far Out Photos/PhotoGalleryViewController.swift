@@ -84,6 +84,7 @@ class PhotoGalleryViewController: UICollectionViewController {
     let pipeline = ImagePipeline {
       let dataCache = try? DataCache(name: "com.raywenderlich.Far-Out-Photos.datacache")
       dataCache?.sizeLimit = 200 * 1024 * 1024
+
       $0.dataCache = dataCache
     }
     ImagePipeline.shared = pipeline
